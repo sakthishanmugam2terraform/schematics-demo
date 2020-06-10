@@ -33,7 +33,7 @@ resource "ibm_dns_zone" "test_schematics_demo_pdns_zone" {
 resource "ibm_dns_permitted_network" "test_schematics_demo_pdns_permitted_network" {
   depends_on  = [ibm_dns_zone.test_schematics_demo_pdns_zone]
   instance_id = ibm_resource_instance.test_schematics_demo_pdns.guid
-  zone_id     = ibm_dns_zone.test-pdns-zone.zone_id
+  zone_id     = ibm_dns_zone.test_schematics_demo_pdns_zone.zone_id
   vpc_crn     = ibm_is_vpc.test_schematics_demo_vpc.resource_crn
 }
 
