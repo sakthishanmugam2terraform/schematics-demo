@@ -25,22 +25,22 @@ resource "ibm_resource_instance" "test_schematics_demo_pdns" {
 resource "ibm_dns_zone" "test_schematics_demo_pdns_zone" {
   depends_on  = [ibm_resource_instance.test_schematics_demo_pdns]
   name        = "test.com"
-  instance_id = ibm_resource_instance.test-pdns-instance.guid
+  instance_id = ibm_resource_instance.test_schematics_demo_pdns.guid
   description = "testdescription"
   label       = "testlabel"
 }
 
 resource "ibm_dns_permitted_network" "test_schematics_demo_pdns_permitted_network" {
   depends_on  = [ibm_dns_zone.test_schematics_demo_pdns_zone]
-  instance_id = ibm_resource_instance.test-pdns-instance.guid
+  instance_id = ibm_resource_instance.test_schematics_demo_pdns.guid
   zone_id     = ibm_dns_zone.test-pdns-zone.zone_id
-  vpc_crn     = ibm_is_vpc.test_pdns_vpc.resource_crn
+  vpc_crn     = ibm_is_vpc.test_schematics_demo_vpc.resource_crn
 }
 
 resource "ibm_dns_resource_record" "test_schematics_demo_pdns_record_a" {
   depends_on  = [ibm_dns_permitted_network.test_schematics_demo_pdns_permitted_network]
-  instance_id = ibm_resource_instance.test-pdns-instance.guid
-  zone_id     = ibm_dns_zone.test-pdns-zone.zone_id
+  instance_id = ibm_resource_instance.test_schematics_demo_pdns.guid
+  zone_id     = ibm_dns_zone.test_schematics_demo_pdns_zone.zone_id
   type        = "A"
   name        = "testA"
   rdata       = "1.2.3.5"
